@@ -1,0 +1,46 @@
+{
+  "_comment": "Jedno źródło prawdy o cechach. Terraform generuje z niego schematy tabel, widok i ciało procedury treningowej.",
+
+  "training_horizon_days": 400,
+  "latest_view_window_days": 14,
+  "_sync_lag": "Opóźnienie między zapisem wartości a jej widocznością online. Argument procedury treningowej: bez cofnięcia momentu odcięcia trening systematycznie widzi świeższe dane niż produkcja.",
+  "sync_lag_seconds": 3600,
+
+  "online_features": [
+    {
+      "name": "txn_count_7d",
+      "type": "INT64",
+      "expr": "COUNT(h.event_time)",
+      "opis": "Liczba transakcji użytkownika",
+      "window_seconds": 604800,
+      "max_age_seconds": 864000,
+      "owner": "zespol-risk"
+    },
+    {
+      "name": "txn_amount_avg_30d",
+      "type": "FLOAT64",
+      "expr": "AVG(h.amount)",
+      "opis": "Średnia kwota transakcji użytkownika",
+      "window_seconds": 2592000,
+      "max_age_seconds": 864000,
+      "owner": "zespol-risk"
+    },
+    {
+      "name": "txn_amount_std_30d",
+      "type": "FLOAT64",
+      "expr": "STDDEV_SAMP(h.amount)",
+      "opis": "Odchylenie standardowe kwoty transakcji użytkownika",
+      "window_seconds": 2592000,
+      "max_age_seconds": 864000,
+      "owner": "zespol-risk"
+    }
+  ],
+
+  "request_features": [
+    {
+      "name": "amount",
+      "type": "FLOAT64",
+      "opis": "Kwota transakcji"
+    }
+  ]
+}

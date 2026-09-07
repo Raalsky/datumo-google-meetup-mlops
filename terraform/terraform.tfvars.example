@@ -1,0 +1,3 @@
+project_id = "some-project"
+region     = "europe-west1"
+location   = "europe-west1"
